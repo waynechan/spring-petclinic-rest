@@ -244,6 +244,18 @@ public class ClinicServiceImpl implements ClinicService {
 		}
 		return pet;
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Pet> findPetByOwnerId(int ownerId) throws DataAccessException {
+		return petRepository.findByOwnerId(ownerId);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Pet> findPetByVetId(int vetId) throws DataAccessException {
+		return petRepository.findByVetId(vetId);
+	}
 
 	@Override
 	@Transactional

@@ -74,5 +74,8 @@ public interface PetRepository {
      * 
      */
 	void delete(Pet pet) throws DataAccessException;
+	
+	List<Pet> findByOwnerId(int ownerId) throws DataAccessException;
 
+	List<Pet> findByVetId(int vetId) throws DataAccessException;
 }

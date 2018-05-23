@@ -21,11 +21,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -45,7 +47,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet", fetch = FetchType.EAGER)
+    private Set<Visit> visits;
 
+	
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
         inverseJoinColumns = @JoinColumn(name = "specialty_id"))
@@ -81,5 +87,29 @@ public class Vet extends Person {
     public void clearSpecialties() {
         getSpecialtiesInternal().clear();
     }
+    
+    
+    @JsonIgnore
+    protected Set<Visit> getVisitsInternal() {
+        if (this.visits == null) {
+            this.visits = new HashSet<>();
+        }
+        return this.visits;
+    }
 
+    protected void setVisitsInternal(Set<Visit> visits) {
+        this.visits = visits;
+    }
+
+    public List<Visit> getVisits() {
+        List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
+        PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
+        return Collections.unmodifiableList(sortedVisits);
+    }
+
+    public void addVisit(Visit visit) {
+        getVisitsInternal().add(visit);
+        visit.setVet(this);
+    }
+    
 }

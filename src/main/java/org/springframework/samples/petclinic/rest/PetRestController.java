@@ -73,6 +73,16 @@ public class PetRestController {
 	public ResponseEntity<Collection<PetType>> getPetTypes(){
 		return new ResponseEntity<Collection<PetType>>(this.clinicService.findPetTypes(), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/ownerId/{ownerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Collection<Pet>> findPetsByOwnerId(@PathVariable("ownerId") int ownerId){
+		return new ResponseEntity<Collection<Pet>>(this.clinicService.findPetByOwnerId(ownerId), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/vetId/{vetId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Collection<Pet>> findPetByVetId(@PathVariable("vetId") int vetId){
+		return new ResponseEntity<Collection<Pet>>(this.clinicService.findPetByVetId(vetId), HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Pet> addPet(@RequestBody @Valid Pet pet, BindingResult bindingResult, UriComponentsBuilder ucBuilder){

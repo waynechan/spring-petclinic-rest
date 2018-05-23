@@ -166,4 +166,16 @@ public class JdbcPetRepositoryImpl implements PetRepository {
 		this.namedParameterJdbcTemplate.update("DELETE FROM pets WHERE id=:id", pet_params);
 	}
 
+	@Override
+	public List<Pet> findByOwnerId(int ownerId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Pet> findByVetId(int vetId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

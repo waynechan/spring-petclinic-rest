@@ -81,4 +81,16 @@ public class JpaPetRepositoryImpl implements PetRepository {
 		}
 	}
 
+	@Override
+	public List<Pet> findByOwnerId(int ownerId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Pet> findByVetId(int vetId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
